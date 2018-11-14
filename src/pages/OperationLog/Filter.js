@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, DatePicker, Form, Input, Select, Row, Col, Icon } from 'antd';
-import { injectIntl, FormattedMessage } from 'react-intl';
+import { formatMessage } from 'umi/locale';
 import styles from './index.less';
 
 const FormItem = Form.Item;
@@ -49,43 +49,44 @@ class Filter extends React.PureComponent {
   }
 
   toggleForm = () => {
+    const { expandForm } = this.state;
     this.setState({
-      expandForm: !this.state.expandForm,
+      expandForm: !expandForm,
       beginDate: undefined,
       endDate: undefined,
     });
   }
 
   renderSimpleForm() {
-    const { intl } = this.props;
-    const { getFieldDecorator } = this.props.form;
-    const pleaseInput = intl.formatMessage({ id: 'OperationLog.filter.input' });
+    const { form } = this.props;
+    const { getFieldDecorator } = form;
+    const pleaseInput = formatMessage({ id: 'OperationLog.filter.input' });
 
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
-            <FormItem label={intl.formatMessage({ id: 'OperationLog.filter.query' })}>
+            <FormItem label={formatMessage({ id: 'OperationLog.filter.query' })}>
               {getFieldDecorator('q')(
                 <Input placeholder={pleaseInput} />
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label={intl.formatMessage({ id: 'OperationLog.create_date' })}>
+            <FormItem label={formatMessage({ id: 'OperationLog.create_date' })}>
               <RangePicker style={{ width: '100%' }} onChange={this.handleCreateDateChange} />
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
             <span className={styles.submitButtons}>
               <Button type="primary" htmlType="submit">
-                <FormattedMessage id="Ops.search" />
+                {formatMessage({ id: 'Ops.search' })}
               </Button>
               <Button style={{ marginLeft: 8 }} onClick={this.handleFormReset}>
-                <FormattedMessage id="Ops.reset" />
+                {formatMessage({ id: 'Ops.reset' })}
               </Button>
               <a style={{ marginLeft: 8 }} onClick={this.toggleForm}>
-                <FormattedMessage id="Ops.expand" />
+                {formatMessage({ id: 'Ops.expand' })}
                 <Icon type="down" />
               </a>
             </span>
@@ -96,70 +97,73 @@ class Filter extends React.PureComponent {
   }
 
   renderAdvancedForm() {
-    const { intl } = this.props;
-    const { getFieldDecorator } = this.props.form;
-    const pleaseInput = intl.formatMessage({ id: 'Msg.please.input' });
-    const pleaseSelect = intl.formatMessage({ id: 'Msg.please.select' });
+    const { form } = this.props;
+    const { getFieldDecorator } = form;
+    const pleaseInput = formatMessage({ id: 'Msg.please.input' });
+    const pleaseSelect = formatMessage({ id: 'Msg.please.select' });
 
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
-            <FormItem label={intl.formatMessage({ id: 'OperationLog.name' })}>
+            <FormItem label={formatMessage({ id: 'OperationLog.name' })}>
               {getFieldDecorator('l_name')(
                 <Input placeholder={pleaseInput} />
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label={intl.formatMessage({ id: 'OperationLog.detail' })}>
+            <FormItem label={formatMessage({ id: 'OperationLog.detail' })}>
               {getFieldDecorator('l_detail')(
                 <Input placeholder={pleaseInput} />
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label={intl.formatMessage({ id: 'OperationLog.create_date' })}>
+            <FormItem label={formatMessage({ id: 'OperationLog.create_date' })}>
               <RangePicker style={{ width: '100%' }} onChange={this.handleCreateDateChange} />
             </FormItem>
           </Col>
         </Row>
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
-            <FormItem label={intl.formatMessage({ id: 'OperationLog.type' })}>
+            <FormItem label={formatMessage({ id: 'OperationLog.type' })}>
               {getFieldDecorator('type')(
                 <Select placeholder={pleaseSelect} style={{ width: '100%' }}>
-                  <Option value="Login"><FormattedMessage id="OperationType.Login" /></Option>
-                  <Option value="Logout"><FormattedMessage id="OperationType.Logout" /></Option>
-                  <Option value="Create"><FormattedMessage id="OperationType.Create" /></Option>
-                  <Option value="Update"><FormattedMessage id="OperationType.Update" /></Option>
-                  <Option value="Delete"><FormattedMessage id="OperationType.Delete" /></Option>
-                  <Option value="Import"><FormattedMessage id="OperationType.Import" /></Option>
-                  <Option value="Upload"><FormattedMessage id="OperationType.Upload" /></Option>
-                  <Option value="Download"><FormattedMessage id="OperationType.Download" /></Option>
+                  <Option value="Login">{formatMessage({ id: 'OperationType.Login' })}</Option>
+                  <Option value="Logout">{formatMessage({ id: 'OperationType.Logout' })}</Option>
+                  <Option value="Create">{formatMessage({ id: 'OperationType.Create' })}</Option>
+                  <Option value="Update">{formatMessage({ id: 'OperationType.Update' })}</Option>
+                  <Option value="Delete">{formatMessage({ id: 'OperationType.Delete' })}</Option>
+                  <Option value="Import">{formatMessage({ id: 'OperationType.Import' })}</Option>
+                  <Option value="Upload">{formatMessage({ id: 'OperationType.Upload' })}</Option>
+                  <Option value="Download">{formatMessage({ id: 'OperationType.Download' })}</Option>
                 </Select>
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label={intl.formatMessage({ id: 'OperationLog.result' })}>
+            <FormItem label={formatMessage({ id: 'OperationLog.result' })}>
               {getFieldDecorator('result')(
                 <Select placeholder={pleaseSelect} style={{ width: '100%' }}>
-                  <Option value="Success"><FormattedMessage id="Msg.success" /></Option>
-                  <Option value="Fail"><FormattedMessage id="Msg.fail" /></Option>
+                  <Option value="Success">{formatMessage({ id: 'Msg.success' })}</Option>
+                  <Option value="Fail">{formatMessage({ id: 'Msg.fail' })}</Option>
                 </Select>
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
             <Button type="primary" htmlType="submit">
-              <FormattedMessage id="Ops.search" />
+              {formatMessage({ id: 'Ops.search' })}
             </Button>
-            <Button style={{ marginLeft: 8 }} onClick={this.handleFormReset}>
-              <FormattedMessage id="Ops.reset" />
+            <Button
+              style={{ marginLeft: 8 }}
+              onClick={this.handleFormReset}
+            >
+              {formatMessage({ id: 'Ops.reset' })}
             </Button>
             <a style={{ marginLeft: 8 }} onClick={this.toggleForm}>
-              <FormattedMessage id="Ops.collapse" />
+              {formatMessage({ id: 'Ops.collapse' })}
               <Icon type="up" />
             </a>
           </Col>
@@ -174,4 +178,4 @@ class Filter extends React.PureComponent {
   }
 }
 
-export default injectIntl(Filter);
+export default Filter;

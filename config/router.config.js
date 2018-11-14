@@ -257,22 +257,22 @@ export default [
       },
       {
         name: 'system',
-        icon: 'settings',
+        icon: 'setting',
         path: '/system',
         routes: [
           {
-            path: '/role',
+            path: '/system/role',
             name: 'role',
             component: './Role',
           },
           {
-            path: '/organization',
+            path: '/system/organization',
             name: 'organization',
             component: './Organization',
           },
           {
-            path: '/operationLog',
-            name: 'operationLog',
+            path: '/system/operationLog',
+            name: 'operationlog',
             component: './OperationLog',
           },
         ],

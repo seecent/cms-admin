@@ -6,7 +6,7 @@ import Filter from './Filter';
 import RoleModal from './RoleModal';
 import RoleTable from './RoleTable';
 import TreeModal from './TreeModal';
-import PageHeaderLayout from '@/layouts/PageHeaderLayout';
+import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import styles from './index.less';
 
 const defaultPage = { offset: 0, limit: 10 };
@@ -189,7 +189,7 @@ class Role extends React.PureComponent {
     const roleTableData = { list, pagination };
 
     return (
-      <PageHeaderLayout>
+      <PageHeaderWrapper>
         <Card bordered={false}>
           <div className={styles.tableList}>
             <div className={styles.tableListForm}>
@@ -244,7 +244,7 @@ class Role extends React.PureComponent {
             />
           )
         }
-      </PageHeaderLayout>
+      </PageHeaderWrapper>
     );
   }
 }

@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'dva';
 import { Card, Form, Button, Dropdown, Icon, Menu, Modal } from 'antd';
-import { injectIntl, FormattedMessage } from 'react-intl';
+import { formatMessage } from 'umi/locale';
 import Filter from './Filter';
 import OrgModal from './OrgModal';
 import OrgTable from './OrgTable';
-import PageHeaderLayout from '../../layouts/PageHeaderLayout';
+import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import styles from './index.less';
 
 const defaultPage = { offset: 0, limit: 10 };
@@ -64,7 +64,7 @@ class Organization extends React.PureComponent {
   }
 
   handleMenuClick = (e) => {
-    const { dispatch, intl } = this.props;
+    const { dispatch } = this.props;
     const { selectedRows } = this.state;
     const self = this;
 
@@ -73,7 +73,7 @@ class Organization extends React.PureComponent {
     switch (e.key) {
       case 'remove':
         Modal.confirm({
-          title: intl.formatMessage({ id: 'Msg.delete.selected.confirm' }),
+          title: formatMessage({ id: 'Msg.delete.selected.confirm' }),
           onOk() {
             dispatch({
               type: 'organization/multiDelete',
@@ -105,14 +105,14 @@ class Organization extends React.PureComponent {
   }
 
   handleEditItem = (item) => {
-    const { dispatch, intl } = this.props;
+    const { dispatch } = this.props;
     dispatch({
       type: 'organization/showModal',
       payload: {
         currentItem: item,
         modalType: 'update',
         modalVisible: true,
-        modalTitle: intl.formatMessage({ id: 'Organization.update' }),
+        modalTitle: formatMessage({ id: 'Organization.update' }),
       },
     });
   }
@@ -137,7 +137,7 @@ class Organization extends React.PureComponent {
   }
 
   showCreateModal = () => {
-    const { dispatch, intl } = this.props;
+    const { dispatch } = this.props;
     dispatch({
       type: 'organization/showModal',
       payload: {
@@ -147,7 +147,7 @@ class Organization extends React.PureComponent {
         },
         modalType: 'create',
         modalVisible: true,
-        modalTitle: intl.formatMessage({ id: 'Organization.create' }),
+        modalTitle: formatMessage({ id: 'Organization.create' }),
       },
     });
   }
@@ -207,13 +207,13 @@ class Organization extends React.PureComponent {
     const menu = (
       <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
         <Menu.Item key="remove">
-          <FormattedMessage id="Ops.delete" />
+          {formatMessage({ id: 'Ops.delete', defaultMessage: 'Delete'})}
         </Menu.Item>
       </Menu>
     );
 
     return (
-      <PageHeaderLayout>
+      <PageHeaderWrapper>
         <Card bordered={false}>
           <div className={styles.tableList}>
             <div className={styles.tableListForm}>
@@ -225,10 +225,10 @@ class Organization extends React.PureComponent {
             </div>
             <div className={styles.tableListOperator}>
               <Button icon="plus" type="primary" onClick={() => this.showCreateModal()}>
-                <FormattedMessage id="Ops.create" />
+                {formatMessage({ id: 'Ops.create', defaultMessage: 'Create'})}
               </Button>
               <Button icon="sync" type="default" onClick={() => this.syncOrganizations()}>
-                <FormattedMessage id="Organization.sync" />
+                {formatMessage({ id: 'Organization.sync', defaultMessage: 'Sync'})}
               </Button>
               {selectedRows.length > 0 && (
                 <span>
@@ -264,9 +264,9 @@ class Organization extends React.PureComponent {
             />
           )
         }
-      </PageHeaderLayout>
+      </PageHeaderWrapper>
     );
   }
 }
 
-export default injectIntl(Organization);
+export default Organization;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Form, Input, Row, Col, Select, TreeSelect } from 'antd';
-import { injectIntl, FormattedMessage } from 'react-intl';
+import { formatMessage } from 'umi/locale';
 import styles from './index.less';
 
 const FormItem = Form.Item;
@@ -34,47 +34,46 @@ class Filter extends React.PureComponent {
   handleTreeSelectSearch = (v, n) => {
     if (n && n.props && n.props.title) {
       return n.props.title.indexOf(v) > -1;
-    } else {
-      return false;
     }
+    return false;
   }
 
   render() {
-    const { orgTreeDatas, intl } = this.props;
-    const { getFieldDecorator } = this.props.form;
+    const { orgTreeDatas, form } = this.props;
+    const { getFieldDecorator } = form;
 
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={6} sm={16}>
-            <FormItem label={intl.formatMessage({ id: 'Organization.filter.query' })}>
+            <FormItem label={formatMessage({ id: 'Organization.filter.query' })}>
               {getFieldDecorator('q')(
-                <Input placeholder={intl.formatMessage({ id: 'Organization.filter.input' })} />
+                <Input placeholder={formatMessage({ id: 'Organization.filter.input' })} />
               )}
             </FormItem>
           </Col>
           <Col md={4} sm={16}>
-            <FormItem label={intl.formatMessage({ id: 'Organization.org_type' })}>
+            <FormItem label={formatMessage({ id: 'Organization.org_type' })}>
               {getFieldDecorator('org_type')(
-                <Select placeholder={intl.formatMessage({ id: 'Msg.please.select' })} style={{ width: '100%' }}>
+                <Select placeholder={formatMessage({ id: 'Msg.please.select' })} style={{ width: '100%' }}>
                   <Option value="GroupCompany">
-                    <FormattedMessage id="OrgType.GroupCompany" />
+                    {formatMessage({ id: 'OrgType.GroupCompany' })}
                   </Option>
                   <Option value="Company">
-                    <FormattedMessage id="OrgType.Company" />
+                    {formatMessage({ id: 'OrgType.Company' })}
                   </Option>
                   <Option value="Branch">
-                    <FormattedMessage id="OrgType.Branch" />
+                    {formatMessage({ id: 'OrgType.Branch' })}
                   </Option>
                   <Option value="Department">
-                    <FormattedMessage id="OrgType.Department" />
+                    {formatMessage({ id: 'OrgType.Department' })}
                   </Option>
                 </Select>
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={16}>
-            <FormItem label={intl.formatMessage({ id: 'Organization.parent' })}>
+            <FormItem label={formatMessage({ id: 'Organization.parent' })}>
               {getFieldDecorator('parent_id')(
                 <TreeSelect
                   showSearch
@@ -82,7 +81,7 @@ class Filter extends React.PureComponent {
                   style={{ width: 300 }}
                   dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
                   treeData={orgTreeDatas}
-                  placeholder={intl.formatMessage({ id: 'Msg.please.select' })}
+                  placeholder={formatMessage({ id: 'Msg.please.select' })}
                   allowClear
                 />
               )}
@@ -91,10 +90,10 @@ class Filter extends React.PureComponent {
           <Col md={6} sm={24}>
             <span className={styles.submitButtons}>
               <Button type="primary" htmlType="submit">
-                <FormattedMessage id="Ops.search" />
+                {formatMessage({ id: 'Ops.search' })}
               </Button>
               <Button style={{ marginLeft: 8 }} onClick={this.handleReset}>
-                <FormattedMessage id="Ops.reset" />
+                {formatMessage({ id: 'Ops.reset' })}
               </Button>
             </span>
           </Col>
@@ -104,4 +103,4 @@ class Filter extends React.PureComponent {
   }
 }
 
-export default injectIntl(Filter);
+export default Filter;

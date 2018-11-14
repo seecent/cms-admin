@@ -1,13 +1,14 @@
 import React, { PureComponent } from 'react';
 import { Table } from 'antd';
-import { injectIntl, formatDateTimeStr } from '../../utils/common';
+import { formatMessage } from 'umi/locale';
+import { formatDateTimeStr } from '@/utils/common';
 import styles from './OperLogTable.less';
 
 const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
 
-@injectIntl()
 class OperLogTable extends PureComponent {
   handleTableChange = (pagination, filters, sorter) => {
+    const { onChange } = this.props;
     const filterValues = Object.keys(filters).reduce((obj, key) => {
       const newObj = { ...obj };
       newObj[key] = getValue(filters[key]);
@@ -27,41 +28,41 @@ class OperLogTable extends PureComponent {
         params.sort = `-${sorter.field}`;
       }
     }
-    this.props.onChange(params);
+    onChange(params);
   }
 
   render() {
-    const { data: { list, pagination }, loading, intl } = this.props;
+    const { data: { list, pagination }, loading } = this.props;
 
     const columns = [
       {
-        title: intl.formatMessage({ id: 'OperationLog.create_date' }),
+        title: formatMessage({ id: 'OperationLog.create_date' }),
         width: 180,
         dataIndex: 'create_date',
         key: 'create_date',
         render: (text) => {
-          return formatDateTimeStr(text);
+          formatDateTimeStr(text);
         },
         sorter: true,
       }, {
-        title: intl.formatMessage({ id: 'OperationLog.name' }),
+        title: formatMessage({ id: 'OperationLog.name' }),
         width: 160,
         key: 'name',
         dataIndex: 'name',
         sorter: true,
       },
       {
-        title: intl.formatMessage({ id: 'OperationLog.detail' }),
+        title: formatMessage({ id: 'OperationLog.detail' }),
         key: 'detail',
         dataIndex: 'detail',
       }, {
-        title: intl.formatMessage({ id: 'OperationLog.user' }),
+        title: formatMessage({ id: 'OperationLog.user' }),
         width: 100,
         key: 'username',
         dataIndex: 'username',
         sorter: true,
       }, {
-        title: intl.formatMessage({ id: 'OperationLog.ip' }),
+        title: formatMessage({ id: 'OperationLog.ip' }),
         width: 120,
         key: 'ip_address',
         dataIndex: 'ip_address',

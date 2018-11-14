@@ -1,11 +1,11 @@
 import React from 'react';
 import { Table, Modal } from 'antd';
 import { Link } from 'react-router-dom';
-import { injectIntl } from 'react-intl';
+import { formatMessage } from 'umi/locale';
 import styles from './OrgTable.less';
-import DropOption from '../../components/DropOption';
-import { Operation } from '../../utils/enums';
-import { formatDateTimeStr } from '../../utils/common';
+import DropOption from '@/components/DropOption';
+import { Operation } from '@/utils/enums';
+import { formatDateTimeStr } from '@/utils/common';
 
 const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
 
@@ -24,13 +24,15 @@ class OrgTable extends React.PureComponent {
   }
 
   handleRowSelectChange = (selectedRowKeys, selectedRows) => {
-    if (this.props.onSelectRow) {
-      this.props.onSelectRow(selectedRows);
+    const { onSelectRow } = this.props;
+    if (onSelectRow) {
+      onSelectRow(selectedRows);
     }
     this.setState({ selectedRowKeys });
   }
 
   handleTableChange = (pagination, filters, sorter) => {
+    const { onChange } = this.props;
     const filterValues = Object.keys(filters).reduce((obj, key) => {
       const newObj = { ...obj };
       newObj[key] = getValue(filters[key]);
@@ -50,7 +52,7 @@ class OrgTable extends React.PureComponent {
         params.sort = `-${sorter.field}`;
       }
     }
-    this.props.onChange(params);
+    onChange(params);
   }
 
   cleanSelectedKeys = () => {
@@ -60,14 +62,14 @@ class OrgTable extends React.PureComponent {
   render() {
     const { selectedRowKeys } = this.state;
 
-    const { data: { list, pagination }, loading, intl, onEditItem, onDeleteItem } = this.props;
+    const { data: { list, pagination }, loading, onEditItem, onDeleteItem } = this.props;
 
     const handleMenuClick = (record, e) => {
       if (e.key === Operation.UPDATE) {
         onEditItem(record);
       } else if (e.key === Operation.DELETE) {
         Modal.confirm({
-          title: intl.formatMessage({ id: 'Organization.delete.confirm' }),
+          title: formatMessage({ id: 'Organization.delete.confirm' }),
           onOk() {
             onDeleteItem(record.id);
           },
@@ -75,8 +77,8 @@ class OrgTable extends React.PureComponent {
       }
     };
 
-    const updateMsg = intl.formatMessage({ id: 'Ops.update' });
-    const deleteMsg = intl.formatMessage({ id: 'Ops.delete' });
+    const updateMsg = formatMessage({ id: 'Ops.update' });
+    const deleteMsg = formatMessage({ id: 'Ops.delete' });
     const menuOptions = [
       { key: Operation.UPDATE, name: updateMsg },
       { key: Operation.DELETE, name: deleteMsg },
@@ -84,74 +86,72 @@ class OrgTable extends React.PureComponent {
 
     const orgTypeList = [
       {
-        text: intl.formatMessage({ id: 'OrgType.Company' }),
+        text: formatMessage({ id: 'OrgType.Company' }),
         value: 'Company',
       }, {
-        text: intl.formatMessage({ id: 'OrgType.Branch' }),
+        text: formatMessage({ id: 'OrgType.Branch' }),
         value: 'Branch',
       }, {
-        text: intl.formatMessage({ id: 'OrgType.Department' }),
+        text: formatMessage({ id: 'OrgType.Department' }),
         value: 'Department',
       },
     ];
 
     // const orgStatusList = [
     //   {
-    //     text: intl.formatMessage({ id: 'OrgStatus.Active' }),
+    //     text: formatMessage({ id: 'OrgStatus.Active' }),
     //     value: 'Active',
     //   }, {
-    //     text: intl.formatMessage({ id: 'OrgStatus.Locked' }),
+    //     text: formatMessage({ id: 'OrgStatus.Locked' }),
     //     value: 'Locked',
     //   },
     // ];
 
-    const creatDropOption = (record) => {
-      return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={menuOptions} />;
-    };
+    const creatDropOption = (record) => <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={menuOptions} />;
 
     const columns = [
       {
-        title: intl.formatMessage({ id: 'Organization.code' }),
+        title: formatMessage({ id: 'Organization.code' }),
         dataIndex: 'code',
         key: 'code',
         sorter: true,
       }, {
-        title: intl.formatMessage({ id: 'Organization.name' }),
+        title: formatMessage({ id: 'Organization.name' }),
         dataIndex: 'name',
         key: 'name',
         render: (text, record) => <Link to={`organizations/show?id=${record.id}`}>{text}</Link>,
         sorter: true,
       }, {
-        title: intl.formatMessage({ id: 'Organization.short_name' }),
+        title: formatMessage({ id: 'Organization.short_name' }),
         dataIndex: 'short_name',
         key: 'short_name',
       }, {
-        title: intl.formatMessage({ id: 'Organization.parent' }),
+        title: formatMessage({ id: 'Organization.parent' }),
         dataIndex: 'parent',
         key: 'parent',
       }, {
-        title: intl.formatMessage({ id: 'Organization.org_type' }),
+        title: formatMessage({ id: 'Organization.org_type' }),
         dataIndex: 'org_type',
         key: 'org_type',
         filters: orgTypeList,
         filterMultiple: false,
         render: (text) => {
-          return intl.formatMessage({ id: text });
+          formatMessage({ id: text });
         },
       }, {
-        title: intl.formatMessage({ id: 'Organization.create_date' }),
+        title: formatMessage({ id: 'Organization.create_date' }),
         dataIndex: 'create_date',
         key: 'create_date',
         render: (text) => {
-          return formatDateTimeStr(text);
+          formatDateTimeStr(text);
         },
         sorter: true,
       }, {
-        title: intl.formatMessage({ id: 'Organization.operation' }),
+        title: formatMessage({ id: 'Organization.operation' }),
         key: 'operation',
         width: 100,
         render: (record) => {
-          return creatDropOption(record);
+          creatDropOption(record);
         },
       },
     ];
@@ -187,4 +187,4 @@ class OrgTable extends React.PureComponent {
   }
 }
 
-export default injectIntl(OrgTable);
+export default OrgTable;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Input, Select, TreeSelect, Row, Col, Modal } from 'antd';
-import { injectIntl, FormattedMessage } from 'react-intl';
+import { formatMessage } from 'umi/locale';
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
@@ -9,8 +9,9 @@ const { Option } = Select;
 @Form.create()
 class OrgModel extends React.PureComponent {
   handleSubmit = (e) => {
+    const { form, onOk } = this.props;
     e.preventDefault();
-    this.props.form.validateFieldsAndScroll((err, values) => {
+    form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         const data = values;
         if (data.org_type) {
@@ -19,7 +20,7 @@ class OrgModel extends React.PureComponent {
         if (data.status) {
           data.status = data.status.replace('OrgStatus.', '');
         }
-        this.props.onOk(data);
+        onOk(data);
       }
     });
   }
@@ -27,14 +28,13 @@ class OrgModel extends React.PureComponent {
   handleTreeSelectSearch = (v, n) => {
     if (n && n.props && n.props.title) {
       return n.props.title.indexOf(v) > -1;
-    } else {
-      return false;
     }
+    return false;
   }
 
   render() {
-    const { item, visible, title, orgTreeDatas, onCancel, intl } = this.props;
-    const { getFieldDecorator } = this.props.form;
+    const { item, visible, title, orgTreeDatas, onCancel, form } = this.props;
+    const { getFieldDecorator } = form;
 
     const modalProps = {
       maskClosable: false,
@@ -73,15 +73,15 @@ class OrgModel extends React.PureComponent {
     };
 
     return (
-      <Modal {...modalProps} >
+      <Modal {...modalProps}>
         <Form onSubmit={this.handleSubmit} layout="horizontal" style={{ marginTop: 8 }}>
           <Row gutter={24}>
             <Col span={12}>
-              <FormItem {...formItemLayout} label={intl.formatMessage({ id: 'Organization.code' })}>
+              <FormItem {...formItemLayout} label={formatMessage({ id: 'Organization.code' })}>
                 {getFieldDecorator('code', {
                   initialValue: item.code,
                   rules: [{
-                    required: true, message: intl.formatMessage({ id: 'Organization.code.required' }),
+                    required: true, message: formatMessage({ id: 'Organization.code.required' }),
                   }],
                 })(
                   <Input style={{ width: 200 }} placeholder="" />
@@ -89,11 +89,11 @@ class OrgModel extends React.PureComponent {
               </FormItem>
             </Col>
             <Col span={12}>
-              <FormItem {...formItemLayout} label={intl.formatMessage({ id: 'Organization.name' })}>
+              <FormItem {...formItemLayout} label={formatMessage({ id: 'Organization.name' })}>
                 {getFieldDecorator('name', {
                   initialValue: item.name,
                   rules: [{
-                    required: true, message: intl.formatMessage({ id: 'Organization.name.required' }),
+                    required: true, message: formatMessage({ id: 'Organization.name.required' }),
                   }],
                 })(
                   <Input style={{ width: 200 }} placeholder="" />
@@ -103,11 +103,11 @@ class OrgModel extends React.PureComponent {
           </Row>
           <Row gutter={24}>
             <Col span={12}>
-              <FormItem {...formItemLayout} label={intl.formatMessage({ id: 'Organization.short_name' })}>
+              <FormItem {...formItemLayout} label={formatMessage({ id: 'Organization.short_name' })}>
                 {getFieldDecorator('short_name', {
                   initialValue: item.short_name,
                   rules: [{
-                    required: true, message: intl.formatMessage({ id: 'Organization.short_name.required' }),
+                    required: true, message: formatMessage({ id: 'Organization.short_name.required' }),
                   }],
                 })(
                   <Input style={{ width: 200 }} placeholder="" />
@@ -115,28 +115,28 @@ class OrgModel extends React.PureComponent {
               </FormItem>
             </Col>
             <Col span={12}>
-              <FormItem label={intl.formatMessage({ id: 'Organization.org_type' })} hasFeedback {...formItemLayout}>
+              <FormItem label={formatMessage({ id: 'Organization.org_type' })} hasFeedback {...formItemLayout}>
                 {getFieldDecorator('org_type', {
                   initialValue: item.org_type,
                   rules: [
                     {
                       required: true,
-                      message: intl.formatMessage({ id: 'Organization.type.required' }),
+                      message: formatMessage({ id: 'Organization.type.required' }),
                     },
                   ],
                 })(
                   <Select name="org_type" style={{ width: 200 }}>
-                    <Option value="OrgType.GroupCompany">
-                      <FormattedMessage id="OrgType.GroupCompany" />
+                    <Option value="GroupCompany">
+                      {formatMessage({ id: 'OrgType.GroupCompany' })}
                     </Option>
-                    <Option value="OrgType.Company">
-                      <FormattedMessage id="OrgType.Company" />
+                    <Option value="Company">
+                      {formatMessage({ id: 'OrgType.Company' })}
                     </Option>
-                    <Option value="OrgType.Branch">
-                      <FormattedMessage id="OrgType.Branch" />
+                    <Option value="Branch">
+                      {formatMessage({ id: 'OrgType.Branch' })}
                     </Option>
-                    <Option value="OrgType.Department">
-                      <FormattedMessage id="OrgType.Department" />
+                    <Option value="Department">
+                      {formatMessage({ id: 'OrgType.Department' })}
                     </Option>
                   </Select>
                 )}
@@ -145,7 +145,7 @@ class OrgModel extends React.PureComponent {
           </Row>
           <Row gutter={24}>
             <Col span={12}>
-              <FormItem label={intl.formatMessage({ id: 'Organization.parent' })} hasFeedback {...formItemLayout}>
+              <FormItem label={formatMessage({ id: 'Organization.parent' })} hasFeedback {...formItemLayout}>
                 {getFieldDecorator('parent_id', {
                   initialValue: item.parent_id ? item.parent_id.toString() : '',
                 })(
@@ -155,20 +155,20 @@ class OrgModel extends React.PureComponent {
                     style={{ width: 200 }}
                     dropdownStyle={{ maxHeight: 280, overflow: 'auto' }}
                     treeData={orgTreeDatas}
-                    placeholder={intl.formatMessage({ id: 'Msg.please.input' })}
+                    placeholder={formatMessage({ id: 'Msg.please.input' })}
                     allowClear
                   />
                 )}
               </FormItem>
             </Col>
             <Col span={12}>
-              <FormItem label={intl.formatMessage({ id: 'Organization.mobilephone' })} hasFeedback {...formItemLayout}>
+              <FormItem label={formatMessage({ id: 'Organization.mobilephone' })} hasFeedback {...formItemLayout}>
                 {getFieldDecorator('mobilephone', {
                   initialValue: item.mobilephone,
                   rules: [
                     {
                       pattern: /^1[34578]\d{9}$/,
-                      message: intl.formatMessage({ id: 'Msg.mobile.validate' }),
+                      message: formatMessage({ id: 'Msg.mobile.validate' }),
                     },
                   ],
                 })(<Input style={{ width: 200 }} />)}
@@ -177,14 +177,14 @@ class OrgModel extends React.PureComponent {
           </Row>
           <Row gutter={24}>
             <Col span={12}>
-              <FormItem label={intl.formatMessage({ id: 'Organization.telephone' })} hasFeedback {...formItemLayout}>
+              <FormItem label={formatMessage({ id: 'Organization.telephone' })} hasFeedback {...formItemLayout}>
                 {getFieldDecorator('telephone', {
                   initialValue: item.telephone,
                 })(<Input style={{ width: 200 }} />)}
               </FormItem>
             </Col>
             <Col span={12}>
-              <FormItem label={intl.formatMessage({ id: 'Organization.fax' })} hasFeedback {...formItemLayout}>
+              <FormItem label={formatMessage({ id: 'Organization.fax' })} hasFeedback {...formItemLayout}>
                 {getFieldDecorator('fax', {
                   initialValue: item.fax,
                 })(<Input style={{ width: 200 }} />)}
@@ -193,20 +193,20 @@ class OrgModel extends React.PureComponent {
           </Row>
           <Row gutter={24}>
             <Col span={12}>
-              <FormItem label={intl.formatMessage({ id: 'Organization.email' })} hasFeedback {...formItemLayout}>
+              <FormItem label={formatMessage({ id: 'Organization.email' })} hasFeedback {...formItemLayout}>
                 {getFieldDecorator('email', {
                   initialValue: item.email,
                   rules: [
                     {
                       pattern: /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
-                      message: intl.formatMessage({ id: 'Msg.email.validate' }),
+                      message: formatMessage({ id: 'Msg.email.validate' }),
                     },
                   ],
                 })(<Input style={{ width: 200 }} />)}
               </FormItem>
             </Col>
             <Col span={12}>
-              <FormItem label={intl.formatMessage({ id: 'Organization.postcode' })} hasFeedback {...formItemLayout}>
+              <FormItem label={formatMessage({ id: 'Organization.postcode' })} hasFeedback {...formItemLayout}>
                 {getFieldDecorator('postcode', {
                   initialValue: item.postcode,
                 })(<Input style={{ width: 200 }} />)}
@@ -215,7 +215,7 @@ class OrgModel extends React.PureComponent {
           </Row>
           <Row gutter={24}>
             <Col span={24}>
-              <FormItem label={intl.formatMessage({ id: 'Organization.address' })} hasFeedback {...formItemOneColLayout}>
+              <FormItem label={formatMessage({ id: 'Organization.address' })} hasFeedback {...formItemOneColLayout}>
                 {getFieldDecorator('address', {
                   initialValue: item.address,
                 })(<TextArea rows={3} cols={60} width={200} />)}
@@ -224,7 +224,7 @@ class OrgModel extends React.PureComponent {
           </Row>
           <Row gutter={24}>
             <Col span={24}>
-              <FormItem label={intl.formatMessage({ id: 'Organization.memo' })} hasFeedback {...formItemOneColLayout}>
+              <FormItem label={formatMessage({ id: 'Organization.memo' })} hasFeedback {...formItemOneColLayout}>
                 {getFieldDecorator('memo', {
                   initialValue: item.memo,
                 })(<TextArea rows={3} cols={60} width={200} />)}
@@ -237,4 +237,4 @@ class OrgModel extends React.PureComponent {
   }
 }
 
-export default injectIntl(OrgModel);
+export default OrgModel;

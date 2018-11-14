@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'dva';
 import { Card, Form } from 'antd';
-import { injectIntl } from '../../utils/common';
+// import { formatMessage } from 'umi/locale';
 import Filter from './Filter';
 import OperLogTable from './OperLogTable';
-import PageHeaderLayout from '../../layouts/PageHeaderLayout';
+import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 
 import styles from './index.less';
 
@@ -14,8 +14,7 @@ const defaultPage = { offset: 0, limit: 10 };
   operationLog: state.operationLog,
 }))
 @Form.create()
-@injectIntl()
-export default class OprationLog extends React.PureComponent {
+class OprationLog extends React.PureComponent {
   state = {
     searchValues: {},
   };
@@ -64,7 +63,7 @@ export default class OprationLog extends React.PureComponent {
     const { operationLog: { list, pagination, loading } } = this.props;
 
     return (
-      <PageHeaderLayout title="操作日志">
+      <PageHeaderWrapper title="操作日志">
         <Card bordered={false}>
           <div className={styles.tableList}>
             <div className={styles.tableListForm}>
@@ -80,7 +79,9 @@ export default class OprationLog extends React.PureComponent {
             />
           </div>
         </Card>
-      </PageHeaderLayout>
+      </PageHeaderWrapper>
     );
   }
 }
+
+export default OprationLog;
