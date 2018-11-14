@@ -1,0 +1,27 @@
+@import "~antd/lib/style/themes/default.less";
+
+.standardTable {
+  :global {
+    .ant-table-pagination {
+      margin-top: 24px;
+    }
+  }
+
+  .tableAlert {
+    margin-bottom: 16px;
+  }
+}
+
+.information {
+  line-height: 22px;
+  :global {
+    .ant-row:not(:last-child) {
+      margin-bottom: 24px;
+    }
+  }
+  .label {
+    color: @heading-color;
+    text-align: right;
+    padding-right: 8px;
+  }
+}

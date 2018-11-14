@@ -1,0 +1,5 @@
+{
+  "appId": "lms",
+  "apiRoot": "http://128.232.7.105",
+  "ssoUrl": "http://128.232.7.105:8080/lms-sso/sso"
+}
