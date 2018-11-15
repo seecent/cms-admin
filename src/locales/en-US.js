@@ -111,6 +111,8 @@ export default {
   'menu.system.role': 'Role',
   'menu.system.organization': 'Organization',
   'menu.system.operationlog': 'OperationLog',
+  'menu.cms': 'CMS',
+  'menu.cms.editor': 'Editor',
   'app.login.message-invalid-credentials': 'Invalid username or password（admin/ant.design）',
   'app.login.message-invalid-verification-code': 'Invalid verification code',
   'app.login.tab-login-credentials': 'Credentials',
@@ -426,4 +428,6 @@ export default {
   "ObjectType.RawLeads": "RawLeads",
   "ObjectType.ViableLeads": "ViableLeads",
   "ObjectType.ActiveLeads": "ActiveLeads",
+  "Apps.cms": "CMS",
+  "Apps.cms.editor": "Editor",
 };

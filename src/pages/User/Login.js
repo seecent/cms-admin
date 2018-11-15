@@ -84,7 +84,7 @@ class LoginPage extends Component {
             <UserName name="userName" placeholder="username: admin or user" />
             <Password
               name="password"
-              placeholder="password: ant.design"
+              placeholder="password: admin"
               onPressEnter={() => this.loginForm.validateFields(this.handleSubmit)}
             />
           </Tab>

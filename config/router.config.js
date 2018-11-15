@@ -256,9 +256,28 @@ export default [
         ],
       },
       {
+        name: 'cms',
+        icon: 'solution',
+        path: '/cms',
+        authority: ['admin', 'user'],
+        routes: [
+          {
+            path: '/cms/editor',
+            name: 'editor',
+            component: './Apps/CMS/Editor',
+          },
+          {
+            path: '/cms/ueditor',
+            name: 'ueditor',
+            component: './Apps/CMS/Ueditor',
+          },
+        ],
+      },
+      {
         name: 'system',
         icon: 'setting',
         path: '/system',
+        authority: ['admin'],
         routes: [
           {
             path: '/system/role',

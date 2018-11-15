@@ -109,6 +109,8 @@ export default {
   'menu.system.role': '角色管理',
   'menu.system.organization': '组织机构',
   'menu.system.operationlog': '操作日志',
+  'menu.cms': '内容管理',
+  'menu.cms.editor': '编辑器',
   'app.login.message-invalid-credentials': '账户或密码错误（admin/ant.design）',
   'app.login.message-invalid-verification-code': '验证码错误',
   'app.login.tab-login-credentials': '账户密码登录',
@@ -420,4 +422,6 @@ export default {
   "ObjectType.RawLeads": "销售线索",
   "ObjectType.ViableLeads": "有效线索",
   "ObjectType.ActiveLeads": "商机",
+  "Apps.cms": "内容管理",
+  "Apps.cms.editor": "编辑器",
 };

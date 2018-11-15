@@ -1,8 +1,8 @@
 import pathToRegexp from 'path-to-regexp';
 import queryString from 'query-string';
-import { parseTree } from '../utils/utils';
+import { parseTree } from '@/utils/utils';
 
-import * as organizationService from '../services/organization';
+import * as organizationService from '@/services/organization';
 
 export default {
   namespace: 'organization',

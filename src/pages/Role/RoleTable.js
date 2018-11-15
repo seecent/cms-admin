@@ -62,7 +62,6 @@ class RoleTable extends React.PureComponent {
     const { selectedRowKeys } = this.state;
 
     const { data: { list, pagination }, loading, onEditItem, onDeleteItem, onEditMenu } = this.props;
-
     const handleMenuClick = (record, e) => {
       if (e.key === Operation.UPDATE) {
         onEditItem(record);
