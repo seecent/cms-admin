@@ -3,8 +3,8 @@ import mockjs from 'mockjs';
 const titles = [
   'Alipay',
   'Angular',
-  'CMS Admin',
-  'CMS Admin',
+  'Ant Design',
+  'Ant Design Pro',
   'Bootstrap',
   'React',
   'Vue',

@@ -280,9 +280,19 @@ export default [
         authority: ['admin'],
         routes: [
           {
+            path: '/system/user',
+            name: 'user',
+            component: './User',
+          },
+          {
             path: '/system/role',
             name: 'role',
             component: './Role',
+          },
+          {
+            path: '/system/menu',
+            name: 'menu',
+            component: './Menus',
           },
           {
             path: '/system/organization',

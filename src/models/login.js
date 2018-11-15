@@ -21,6 +21,8 @@ export default {
       });
       // Login successfully
       if (response.status === 'ok') {
+        console.log("response.status");
+        console.log(response.status);
         reloadAuthorized();
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();
@@ -37,6 +39,7 @@ export default {
             return;
           }
         }
+        console.log(redirect);
         yield put(routerRedux.replace(redirect || '/'));
       }
     },
