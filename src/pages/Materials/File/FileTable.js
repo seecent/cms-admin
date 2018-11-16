@@ -1,22 +1,13 @@
 import React from 'react';
-import { Table, Modal, Icon } from 'antd';
+import { Table, Modal } from 'antd';
 import { formatMessage } from 'umi/locale';
 import DropOption from '@/components/DropOption';
+import FileTypeIcon from '@/components/FileTypeIcon';
 import styles from './FileTable.less';
 import { formatDateTimeStr } from '@/utils/common';
 import { Operation } from '@/utils/enums';
 
 const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
-const iconStyle = { fontSize: 24 };
-const imageIcon = <Icon type="picture" style={iconStyle} theme="twoTone" twoToneColor="#00CD00" />;
-const videoIcon = <Icon type="video-camera" style={iconStyle} theme="twoTone" twoToneColor="#9370DB" />;
-const voiceIcon = <Icon type="sound" style={iconStyle} theme="twoTone" twoToneColor="#eb2f96" />;
-const txtIcon = <Icon type="file-text" style={iconStyle} theme="twoTone" twoToneColor="#778899" />;
-const csvIcon = <Icon type="file" style={iconStyle} theme="twoTone" twoToneColor="#eb2f96" />;
-const pdfIcon = <Icon type="file-pdf" style={iconStyle} theme="twoTone" twoToneColor="#CD0000" />;
-const wordIcon = <Icon type="file-word" style={iconStyle} theme="twoTone" twoToneColor="#1C86EE" />;
-const excelIcon = <Icon type="file-excel" style={iconStyle} theme="twoTone" twoToneColor="#00CD00" />;
-const pptIcon = <Icon type="file-ppt" style={iconStyle} theme="twoTone" twoToneColor="#FF0000" />;
 
 class FileTable extends React.PureComponent {
   handleTableChange = (pagination, filters, sorter) => {
@@ -102,36 +93,9 @@ class FileTable extends React.PureComponent {
       },
     ];
 
-
-    const creatIconSpan = (icon, text) => <span>{text} {icon}</span>;
-    const creatImage = (url) => <img src={url} className={styles.fileImage} alt='' />;
-
     const renderFileTypeHtml = (record) => {
       const { type, url } = record;
-      const typeText = formatMessage({ id: type });
-      switch(type)
-      {
-        case 'FileType.IMAGE':
-          return creatIconSpan(creatImage(url), typeText);
-        case 'FileType.VIDEO':
-          return creatIconSpan(videoIcon, typeText);
-        case 'FileType.VOICE':
-          return creatIconSpan(voiceIcon, typeText);
-        case 'FileType.TXT':
-          return creatIconSpan(txtIcon, typeText);
-        case 'FileType.CSV':
-          return creatIconSpan(csvIcon, typeText);
-        case 'FileType.PDF':
-          return creatIconSpan(pdfIcon, typeText);
-        case 'FileType.EXCEL':
-          return creatIconSpan(excelIcon, typeText);
-        case 'FileType.WORD':
-          return creatIconSpan(wordIcon, typeText);
-        case 'FileType.PPT':
-          return creatIconSpan(pptIcon, typeText);
-        default:
-          return typeText;
-      }
+      return <FileTypeIcon type={type} url={url} />
     }
 
     const creatDropOption = (record) => <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={menuOptions} />;
@@ -178,18 +142,6 @@ class FileTable extends React.PureComponent {
 
     return (
       <div className={styles.fileTable}>
-        <div style={{ marginBottom: 8 }}>
-          <span style={{ marginBottom: 8 }}>{formatMessage({ id: 'File.type' })}： </span>
-          <span style={{ margin: 8 }}>{imageIcon}</span>
-          <span style={{ margin: 8 }}>{videoIcon}</span>
-          <span style={{ margin: 8 }}>{voiceIcon}</span>
-          <span style={{ margin: 8 }}>{wordIcon}</span>
-          <span style={{ margin: 8 }}>{excelIcon}</span>
-          <span style={{ margin: 8 }}>{pptIcon}</span>
-          <span style={{ margin: 8 }}>{pdfIcon}</span>
-          <span style={{ margin: 8 }}>{txtIcon}</span>
-          <span style={{ margin: 8 }}>{csvIcon}</span>
-        </div>
         <Table
           size="middle"
           loading={loading}
