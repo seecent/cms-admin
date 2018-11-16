@@ -1,13 +1,8 @@
-import { injectIntl as inject } from 'react-intl';
-
-export const injectIntl = options => (target) => {
-  return inject(target, options);
-};
-
 export function formatDateStr(t) {
   if (t === 'None') {
     return '';
-  } else if (t) {
+  }
+  if (t) {
     if (t.indexOf(' ') !== -1) {
       const s = t.split(' ');
       return s[0];
@@ -19,7 +14,8 @@ export function formatDateStr(t) {
 export function formatDateTimeStr(t) {
   if (t === 'None') {
     return '';
-  } else if (t) {
+  }
+  if (t) {
     if (t.indexOf('.') !== -1) {
       const s = t.split('.');
       return s[0];
@@ -35,6 +31,7 @@ export function formatEnumStr(t, enums) {
       return e.text;
     }
   }
+  return '';
 }
 
 export function formatListStr(id, list) {
@@ -44,6 +41,7 @@ export function formatListStr(id, list) {
       return e.name;
     }
   }
+  return '';
 }
 
 export function formatLanguage(lang) {
@@ -103,29 +101,18 @@ export function formatTreeDatas(treeDatas) {
   return datas;
 }
 
-export function pageTreeData(response) {
-  return {
-    list: tableTreeData(response.list),
-    pagination: {
-      total: Number(response.headers['x-total-count']),
-      pageSize: Number(response.limit) || 10,
-    },
-  };
-}
-
 // 计算两个整数的百分比值
 export function getPercent(num, total) {
   const n = parseFloat(num);
   const t = parseFloat(total);
-  if (isNaN(n) || isNaN(t)) {
-    return '-';
-  }
+  // if (isNaN(n) || isNaN(t)) {
+  //   return '-';
+  // }
   if (total <= 0) {
     return '0%';
-  } else {
-    const p = Math.round((n * 100) / t);
-    return `${p}%`;
   }
+  const p = Math.round((n * 100) / t);
+  return `${p}%`;
 }
 
 export function tableTreeData(data) {
@@ -166,6 +153,16 @@ export function tableTreeData(data) {
   }
 
   return tree;
+}
+
+export function pageTreeData(response) {
+  return {
+    list: tableTreeData(response.list),
+    pagination: {
+      total: Number(response.headers['x-total-count']),
+      pageSize: Number(response.limit) || 10,
+    },
+  };
 }
 
 export function selectTreeData(data, vkey, lkey) {
@@ -224,6 +221,4 @@ export class UnauthorizedError extends Error {
 }
 // UnauthorizedError.prototype = Error.prototype;
 
-export const isAuthError = (err) => {
-  return err.name === 'UnauthorizedError';
-};
+export const isAuthError = (err) => err.name === 'UnauthorizedError';

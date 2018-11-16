@@ -274,6 +274,24 @@ export default [
         ],
       },
       {
+        name: 'material',
+        icon: 'solution',
+        path: '/material',
+        authority: ['admin', 'user'],
+        routes: [
+          {
+            path: '/material/folder',
+            name: 'folder',
+            component: './Materials/Folder',
+          },
+          {
+            path: '/material/file',
+            name: 'file',
+            component: './Materials/File',
+          },
+        ],
+      },
+      {
         name: 'system',
         icon: 'setting',
         path: '/system',
