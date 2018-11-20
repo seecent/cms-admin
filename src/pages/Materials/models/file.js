@@ -14,6 +14,7 @@ export default {
     existSubdFolders: true,
     mediafileId: undefined,
     mediafile: {},
+    images: [],
   },
   effects: {
     *fetch({ payload = {} }, { call, put }) {
@@ -23,16 +24,28 @@ export default {
       });
       const response = yield call(fileService.query, payload);
       const total = response.headers['x-total-count'];
-      yield put({
-        type: 'save',
-        payload: {
-          list: response.list,
-          pagination: {
-            pageSize: Number(payload.limit) || 10,
-            total: Number(total),
+      if (response.list) {
+        const { list } = response;
+        const images = [];
+        for (let i = 0; i < list.length; i+=1) {
+          const item = list[i];
+          if(item.type === 'FileType.IMAGE') {
+            item.no = i;
+            images.push({ no: i, src: item.url });
+          }
+        }
+        yield put({
+          type: 'save',
+          payload: {
+            list,
+            pagination: {
+              pageSize: Number(payload.limit) || 10,
+              total: Number(total),
+            },
+            images,
           },
-        },
-      });
+        });
+      }
       yield put({
         type: 'changeLoading',
         payload: false,
@@ -92,7 +105,7 @@ export default {
       };
     },
     save(state, { payload }) {
-      const { list, pagination } = payload;
+      const { list, pagination, images } = payload;
       return {
         ...state,
         list,
@@ -100,6 +113,7 @@ export default {
           ...state.pagination,
           ...pagination,
         },
+        images,
       };
     },
     changeLoading(state, action) {

@@ -165,7 +165,6 @@ class Organization extends React.PureComponent {
     if (modalType === 'update') {
       payload.id = currentItem.id;
     }
-    console.log("handleModelOk");
     dispatch({
       type: `organization/${modalType}`,
       payload,

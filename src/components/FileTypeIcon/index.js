@@ -6,7 +6,7 @@ const iconStyle = { fontSize: 24 };
 // const imageIcon = <Icon type="picture" style={iconStyle} theme="twoTone" twoToneColor="#00CD00" />;
 const videoIcon = <Icon type="video-camera" style={iconStyle} theme="twoTone" twoToneColor="#9370DB" />;
 const voiceIcon = <Icon type="sound" style={iconStyle} theme="twoTone" twoToneColor="#eb2f96" />;
-const txtIcon = <Icon type="file-text" style={iconStyle} theme="twoTone" twoToneColor="#778899" />;
+const txtIcon = <Icon type="file-text" style={iconStyle} theme="twoTone" twoToneColor="#D3D3D3" />;
 const csvIcon = <Icon type="file" style={iconStyle} theme="twoTone" twoToneColor="#eb2f96" />;
 const pdfIcon = <Icon type="file-pdf" style={iconStyle} theme="twoTone" twoToneColor="#CD0000" />;
 const wordIcon = <Icon type="file-word" style={iconStyle} theme="twoTone" twoToneColor="#1C86EE" />;
@@ -15,18 +15,21 @@ const pptIcon = <Icon type="file-ppt" style={iconStyle} theme="twoTone" twoToneC
 
 class FileTypeIcon extends React.PureComponent {
 
-  creatImage = (url, style) => {
+  creatImage = (no, url, style, onClick) => {
     if (url) {
+      if (onClick) {
+        return (<a onClick={() => onClick(no)}><img src={url} style={style} alt='' /></a>);
+      }
       return (<img src={url} style={style} alt='' />);
     }
     return '';
   };
 
-  getIcon = (type, url, style) => {
+  getIcon = (no, type, url, style, onClick) => {
     switch(type)
     {
       case 'FileType.IMAGE':
-        return this.creatImage(url, style);
+        return this.creatImage(no, url, style, onClick);
       case 'FileType.VIDEO':
         return videoIcon;
       case 'FileType.VOICE':
@@ -50,13 +53,15 @@ class FileTypeIcon extends React.PureComponent {
 
   render() {
     const {
+      no,
       type,
       url,
-      style={ width: 40, height: 40 },
+      style={ width: 48, height: 48 },
+      onClick,
     } = this.props;
 
     const text = formatMessage({ id: type });
-    const icon = this.getIcon(type, url, style);
+    const icon = this.getIcon(no, type, url, style, onClick);
     
     return (
       <span>{text} {icon}</span>

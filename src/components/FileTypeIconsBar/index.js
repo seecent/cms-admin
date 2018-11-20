@@ -6,7 +6,7 @@ const iconStyle = { fontSize: 24 };
 const imageIcon = <Icon type="picture" style={iconStyle} theme="twoTone" twoToneColor="#00CD00" />;
 const videoIcon = <Icon type="video-camera" style={iconStyle} theme="twoTone" twoToneColor="#9370DB" />;
 const voiceIcon = <Icon type="sound" style={iconStyle} theme="twoTone" twoToneColor="#eb2f96" />;
-const txtIcon = <Icon type="file-text" style={iconStyle} theme="twoTone" twoToneColor="#778899" />;
+const txtIcon = <Icon type="file-text" style={iconStyle} theme="twoTone" twoToneColor="#D3D3D3" />;
 const csvIcon = <Icon type="file" style={iconStyle} theme="twoTone" twoToneColor="#eb2f96" />;
 const pdfIcon = <Icon type="file-pdf" style={iconStyle} theme="twoTone" twoToneColor="#CD0000" />;
 const wordIcon = <Icon type="file-word" style={iconStyle} theme="twoTone" twoToneColor="#1C86EE" />;

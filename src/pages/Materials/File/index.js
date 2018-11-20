@@ -130,6 +130,7 @@ class File extends React.PureComponent {
         loading,
         list,
         pagination,
+        images,
       },
       folders,
       existSubdFolders,
@@ -181,6 +182,7 @@ class File extends React.PureComponent {
               <FileTable
                 loading={loading}
                 data={tableData}
+                images={images}
                 onChange={this.handleTableChange}
               />
             </Spin>

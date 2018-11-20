@@ -1,4 +1,5 @@
 import React from 'react';
+import Lightbox from 'react-images';
 import { Table, Modal } from 'antd';
 import { formatMessage } from 'umi/locale';
 import DropOption from '@/components/DropOption';
@@ -10,6 +11,12 @@ import { Operation } from '@/utils/enums';
 const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
 
 class FileTable extends React.PureComponent {
+  state = {
+    lightboxIsOpen: false,
+    currentImage: 0,
+    showThumbnails: true,
+  };
+  
   handleTableChange = (pagination, filters, sorter) => {
     const { onChange } = this.props;
     const filterValues = Object.keys(filters).reduce((obj, key) => {
@@ -34,13 +41,38 @@ class FileTable extends React.PureComponent {
     onChange(params);
   }
 
+  openLightbox = (no) => {
+    this.setState({ 'lightboxIsOpen': true, 'currentImage': no });
+  }
+
+  handleClickThumbnail = (no) => {
+    this.setState({ 'currentImage': no });
+  }
+
+  gotoPrevLightboxImage = () => {
+    const { currentImage } = this.state; 
+    this.setState({ 'currentImage': currentImage - 1 });
+  }
+
+  gotoNextLightboxImage = () => {
+    const { currentImage } = this.state; 
+     this.setState({ 'currentImage': currentImage + 1 });
+  }
+
+  closeLightbox = () => {
+    this.setState({ 'lightboxIsOpen': false });
+  }
+
   render() {
     const {
       data: { list, pagination },
       loading,
+      images,
       onEditItem,
       onDeleteItem,
     } = this.props;
+
+    const { lightboxIsOpen, currentImage, showThumbnails } = this.state;
 
     const handleMenuClick = (record, e) => {
       if (e.key === Operation.UPDATE) {
@@ -94,8 +126,8 @@ class FileTable extends React.PureComponent {
     ];
 
     const renderFileTypeHtml = (record) => {
-      const { type, url } = record;
-      return <FileTypeIcon type={type} url={url} />
+      const { no, type, url } = record;
+      return <FileTypeIcon no={no} type={type} url={url} onClick={this.openLightbox} />
     }
 
     const creatDropOption = (record) => <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={menuOptions} />;
@@ -105,16 +137,18 @@ class FileTable extends React.PureComponent {
         title: formatMessage({ id: 'File.name' }),
         key: 'Name',
         dataIndex: 'name',
+        sorter: true,
+       }, {
+        title: formatMessage({ id: 'File.file_size' }),
+        dataIndex: 'file_size',
+        key: 'file_size',
+        sorter: true,
        }, {
         title: formatMessage({ id: 'File.type' }),
         key: 'type',
         filters: fileTypeList,
         filterMultiple: false,
         render: (record) => renderFileTypeHtml(record),
-      }, {
-        title: formatMessage({ id: 'File.file_size' }),
-        dataIndex: 'file_size',
-        key: 'file_size',
       }, {
         title: formatMessage({ id: 'File.description' }),
         dataIndex: 'Description',
@@ -142,6 +176,18 @@ class FileTable extends React.PureComponent {
 
     return (
       <div className={styles.fileTable}>
+        {images && images.length > 0 && (
+          <Lightbox
+            images={images}
+            isOpen={lightboxIsOpen}
+            currentImage={currentImage}
+            showThumbnails={showThumbnails}
+            onClickThumbnail={this.handleClickThumbnail}
+            onClickPrev={this.gotoPrevLightboxImage}
+            onClickNext={this.gotoNextLightboxImage}
+            onClose={this.closeLightbox}
+          />
+        )}
         <Table
           size="middle"
           loading={loading}

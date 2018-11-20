@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "presite": "node ./scripts/generateMock.js && cd functions && npm install",
-    "start": "cross-env APP_TYPE=site umi dev",
+    "start": "set port=8001 && cross-env APP_TYPE=site umi dev",
     "start:no-mock": "cross-env MOCK=none umi dev",
     "build": "umi build",
     "site": "npm run presite && cross-env APP_TYPE=site npm run build && firebase deploy",
@@ -48,6 +48,7 @@
     "prop-types": "^15.5.10",
     "qs": "^6.5.2",
     "query-string": "^6.2.0",
+    "quill-image-drop-module": "^1.0.3",
     "rc-animate": "^2.4.4",
     "react": "^16.5.1",
     "react-container-query": "^0.11.0",
@@ -55,7 +56,8 @@
     "react-document-title": "^2.0.3",
     "react-dom": "^16.5.1",
     "react-fittext": "^1.0.0",
-    "quill-image-drop-module": "^1.0.3",
+    "react-image-gallery": "^0.8.12",
+    "react-images": "^0.5.19",
     "react-quill": "^1.3.2",
     "react-router-dom": "^4.3.1",
     "store": "^2.0.12"
