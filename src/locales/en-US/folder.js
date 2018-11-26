@@ -1,0 +1,17 @@
+export default {
+  "Folder.id": "ID",
+  "Folder.code": "Code",
+  "Folder.name": "Name",
+  "Folder.parent_id": "ParentID",
+  "Folder.parent": "Parent",
+  "Folder.description": "Description",
+  "Folder.create": "Create Folder",
+  "Folder.update": "Eidt Folder",
+  "Folder.created_date": "Create Time",
+  "Folder.code.required": "code is required",
+  "Folder.name.required": "name is required",
+  "Folder.delete.confirm": "Are you sure delete this folder?",
+  "Folder.filter.query": "Query",
+  "Folder.filter.input": "search like code or name",
+  "Folder.operation": "Operation",
+};

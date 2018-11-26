@@ -1,0 +1,17 @@
+export default {
+  "Folder.id": "ID",
+  "Folder.code": "编码",
+  "Folder.name": "名称",
+  "Folder.parent_id": "上级目录ID",
+  "Folder.parent": "上级目录",
+  "Folder.description": "描述",
+  "Folder.create": "创建目录",
+  "Folder.update": "修改目录",
+  "Folder.created_date": "创建时间",
+  "Folder.code.required": "必须填写编码",
+  "Folder.name.required": "必须填写名称",
+  "Folder.delete.confirm": "您是否确定要删除该目录？",
+  "Folder.filter.query": "查询",
+  "Folder.filter.input": "编码或名称模糊查询",
+  "Folder.operation": "操作",
+};
