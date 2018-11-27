@@ -255,6 +255,24 @@ export default [
           },
         ],
       },
+      { // weixin
+        name: 'weixin',
+        icon: 'wechat',
+        path: '/weixin',
+        authority: ['admin', 'user'],
+        routes: [
+          {
+            path: '/weixin/wxaccount',
+            name: 'wxaccount',
+            component: './apps/Weixin/WxAccount',
+          },
+          {
+            path: '/weixin/wxuser',
+            name: 'wxuser',
+            component: './apps/Weixin/WxUser',
+          },
+        ],
+      },
       {
         name: 'cms',
         icon: 'solution',
@@ -264,18 +282,18 @@ export default [
           {
             path: '/cms/editor',
             name: 'editor',
-            component: './Apps/CMS/Editor',
+            component: './apps/CMS/Editor',
           },
           {
             path: '/cms/ueditor',
             name: 'ueditor',
-            component: './Apps/CMS/Ueditor',
+            component: './apps/CMS/Ueditor',
           },
         ],
       },
       {
         name: 'material',
-        icon: 'solution',
+        icon: 'folder',
         path: '/material',
         authority: ['admin', 'user'],
         routes: [

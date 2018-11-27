@@ -49,4 +49,7 @@ export default {
   'menu.material.file': '文件',
   'menu.material.image': '图片',
   'menu.material.vedio': '视频',
+  'menu.weixin': '微信公众号',
+  'menu.weixin.wxaccount': '公众号设置',
+  'menu.weixin.wxuser': '用户管理',
 };

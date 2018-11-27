@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export function formatDateStr(t) {
   if (t === 'None') {
     return '';
@@ -16,13 +18,19 @@ export function formatDateTimeStr(t) {
     return '';
   }
   if (t) {
-    if (t.indexOf('.') !== -1) {
-      const s = t.split('.');
-      return s[0];
+    if (typeof(t) === 'string') {
+      if (t.indexOf('.') !== -1) {
+        const s = t.split('.');
+        return s[0];
+      }
+    } else if (typeof(t) === 'number') {
+      return moment(t * 1000).format("YYYY-MM-DD HH:mm:ss");
     }
   }
   return t;
 }
+
+
 
 export function formatEnumStr(t, enums) {
   for (let i = 0; i < enums.length; i += 1) {

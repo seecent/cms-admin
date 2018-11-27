@@ -19,6 +19,8 @@ import ops from './en-US/ops';
 import organization from './en-US/organization';
 import role from './en-US/role';
 import user from './en-US/user';
+import wxaccount from './en-US/apps/Weixin/wxaccount';
+import wxuser from './en-US/apps/Weixin/wxuser';
 
 export default {
   'navBar.lang': 'Languages',
@@ -50,4 +52,6 @@ export default {
   ...organization,
   ...role,
   ...user,
+  ...wxaccount,
+  ...wxuser,
 };

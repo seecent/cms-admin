@@ -19,6 +19,8 @@ import ops from './zh-CN/ops';
 import organization from './zh-CN/organization';
 import role from './zh-CN/role';
 import user from './zh-CN/user';
+import wxaccount from './zh-CN/apps/Weixin/wxaccount';
+import wxuser from './zh-CN/apps/Weixin/wxuser';
 
 export default {
   'navBar.lang': '语言',
@@ -50,4 +52,6 @@ export default {
   ...organization,
   ...role,
   ...user,
+  ...wxaccount,
+  ...wxuser,
 };
